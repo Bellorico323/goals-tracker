@@ -1,16 +1,31 @@
 {
   "name": "@goals/api",
   "version": "1.0.0",
+  "scripts": {
+    "generate": "drizzle-kit generate",
+    "migrate": "tsx src/db/migrate.ts"
+  },
   "devDependencies": {
-    "@types/node": "^22.1.0",
     "@goals/eslint-config": "workspace:*",
     "@goals/prettier": "workspace:*",
-    "@goals/tsconfig": "workspace:*"
+    "@goals/tsconfig": "workspace:*",
+    "@types/node": "^22.1.0",
+    "drizzle-kit": "^0.23.1"
   },
   "prettier": "@goals/prettier",
   "eslintConfig": {
     "extends": [
       "@goals/eslint-config/node"
     ]
+  },
+  "dependencies": {
+    "@neondatabase/serverless": "^0.9.4",
+    "@paralleldrive/cuid2": "^2.2.2",
+    "chalk": "^5.3.0",
+    "dotenv": "^16.4.5",
+    "drizzle-orm": "^0.32.1",
+    "postgres": "^3.4.4",
+    "tsx": "^4.16.5",
+    "zod": "^3.23.8"
   }
 }
