@@ -1,0 +1,16 @@
+{
+  "name": "@goals/api",
+  "version": "1.0.0",
+  "devDependencies": {
+    "@types/node": "^22.1.0",
+    "@goals/eslint-config": "workspace:*",
+    "@goals/prettier": "workspace:*",
+    "@goals/tsconfig": "workspace:*"
+  },
+  "prettier": "@goals/prettier",
+  "eslintConfig": {
+    "extends": [
+      "@goals/eslint-config/node"
+    ]
+  }
+}
