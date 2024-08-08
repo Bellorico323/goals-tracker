@@ -20,6 +20,9 @@
     "allowSyntheticDefaultImports": true,
     "paths": {
       "@/": ["./src/"]
-    }
+    },
+    "types": [
+      "vitest/globals"
+    ]
   }
 }
