@@ -1,10 +1,13 @@
 import { app } from 'src/app'
+import { env } from 'src/env'
 import request from 'supertest'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 
 describe('Register (e2e)', () => {
   beforeAll(async () => {
     await app.ready()
+    console.log('test')
+    console.log(env.DATABASE_URL)
   })
   afterAll(async () => {
     await app.close()
