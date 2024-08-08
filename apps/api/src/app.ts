@@ -1,3 +1,5 @@
+import fastifyCookie from '@fastify/cookie'
+import fastifyJwt from '@fastify/jwt'
 import fastifySwagger from '@fastify/swagger'
 import fastifySwaggerUi from '@fastify/swagger-ui'
 import fastify from 'fastify'
@@ -9,20 +11,25 @@ import {
 } from 'fastify-type-provider-zod'
 import { ZodError } from 'zod'
 
+import { env } from './env'
+import { userRoutes } from './http/controllers/users/routes'
+
 export const app = fastify().withTypeProvider<ZodTypeProvider>()
 app.setValidatorCompiler(validatorCompiler)
 app.setSerializerCompiler(serializerCompiler)
 
-// app.register(fastifyJwt, {
-//   secret: env.JWT_SECRET,
-//   cookie: {
-//     cookieName: 'refreshToken',
-//     signed: false,
-//   },
-//   sign: {
-//     expiresIn: '10m',
-//   },
-// })
+app.register(fastifyJwt, {
+  secret: env.JWT_SECRET,
+  cookie: {
+    cookieName: 'refreshToken',
+    signed: false,
+  },
+  sign: {
+    expiresIn: '10m',
+  },
+})
+
+app.register(fastifyCookie)
 
 app.register(fastifySwagger, {
   openapi: {
@@ -47,6 +54,7 @@ app.register(fastifySwagger, {
 app.register(fastifySwaggerUi, {
   routePrefix: '/docs',
 })
+app.register(userRoutes)
 
 app.setErrorHandler((error, _, reply) => {
   if (error instanceof ZodError) {
