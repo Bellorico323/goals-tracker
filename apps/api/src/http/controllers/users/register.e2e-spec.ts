@@ -1,13 +1,14 @@
-import { app } from 'src/app'
-import { env } from 'src/env'
+import { FastifyInstance } from 'fastify'
 import request from 'supertest'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 
 describe('Register (e2e)', () => {
+  let app: FastifyInstance
+
   beforeAll(async () => {
+    app = (await import('src/app')).app
+
     await app.ready()
-    console.log('test')
-    console.log(env.DATABASE_URL)
   })
   afterAll(async () => {
     await app.close()

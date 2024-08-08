@@ -1,10 +1,13 @@
+import { FastifyInstance } from 'fastify'
 import request from 'supertest'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 
-import { app } from '../../../app'
-
 describe('Authenticate (e2e)', () => {
+  let app: FastifyInstance
+
   beforeAll(async () => {
+    app = (await import('src/app')).app
+
     await app.ready()
   })
   afterAll(async () => {
