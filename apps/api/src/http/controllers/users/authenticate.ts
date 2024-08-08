@@ -1,6 +1,6 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
-import { InvalidCredentialsError } from 'src/use-cases/errors/invalid-credentials-error'
-import { makeAuthenticateUseCase } from 'src/use-cases/factories/make-authenticate-use-case'
+import { InvalidCredentialsError } from 'src/use-cases/users/errors/invalid-credentials-error'
+import { makeAuthenticateUseCase } from 'src/use-cases/users/factories/make-authenticate-use-case'
 import { z } from 'zod'
 
 export async function authenticate(
