@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+import { User } from '@prisma/client'
 import { hash } from 'bcryptjs'
-import { User, UsersRepository } from 'src/repositories/users-repository'
+import { UsersRepository } from 'src/repositories/users-repository'
 
 import { UserAlreadyExistsError } from './errors/user-already-exists-error'
 

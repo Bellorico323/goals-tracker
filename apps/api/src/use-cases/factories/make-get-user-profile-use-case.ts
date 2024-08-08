@@ -1,9 +1,9 @@
-import { DrizzleUsersRepository } from 'src/repositories/drizzle/drizzle-users-repository'
+import { PrismaUsersRepository } from 'src/repositories/prisma/prisma-users-repository'
 
 import { GetUserProfileUseCase } from '../get-user-profile'
 
 export function makeGetUserProfileUseCase() {
-  const usersRepository = new DrizzleUsersRepository()
+  const usersRepository = new PrismaUsersRepository()
   const useCase = new GetUserProfileUseCase(usersRepository)
 
   return useCase

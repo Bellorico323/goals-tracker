@@ -1,9 +1,9 @@
-import { DrizzleUsersRepository } from 'src/repositories/drizzle/drizzle-users-repository'
+import { PrismaUsersRepository } from 'src/repositories/prisma/prisma-users-repository'
 
 import { RegisterUseCase } from '../register'
 
 export function makeRegisterUseCase() {
-  const usersRepository = new DrizzleUsersRepository()
+  const usersRepository = new PrismaUsersRepository()
   const registerUseCase = new RegisterUseCase(usersRepository)
 
   return registerUseCase
