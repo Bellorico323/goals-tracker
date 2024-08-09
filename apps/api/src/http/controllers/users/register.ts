@@ -2,7 +2,8 @@ import { FastifyInstance } from 'fastify'
 import { ZodTypeProvider } from 'fastify-type-provider-zod'
 import { UserAlreadyExistsError } from 'src/use-cases/users/errors/user-already-exists-error'
 import { makeRegisterUseCase } from 'src/use-cases/users/factories/make-register-use-case'
-import { z } from 'zod'
+
+import { createUserSchema } from './schemas/auth.schema'
 
 export async function register(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().post(
@@ -11,11 +12,7 @@ export async function register(app: FastifyInstance) {
       schema: {
         tags: ['auth'],
         summary: 'Create a new account',
-        body: z.object({
-          name: z.string(),
-          email: z.string().email(),
-          password: z.string().min(6),
-        }),
+        body: createUserSchema,
       },
     },
     async (request, reply) => {
