@@ -54,6 +54,7 @@ app.register(fastifySwagger, {
 app.register(fastifySwaggerUi, {
   routePrefix: '/docs',
 })
+
 app.register(userRoutes)
 
 app.setErrorHandler((error, _, reply) => {

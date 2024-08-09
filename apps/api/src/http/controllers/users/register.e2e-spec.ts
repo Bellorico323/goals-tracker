@@ -1,6 +1,5 @@
 import { FastifyInstance } from 'fastify'
 import request from 'supertest'
-import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 
 describe('Register (e2e)', () => {
   let app: FastifyInstance

@@ -1,26 +1,32 @@
-import { FastifyReply, FastifyRequest } from 'fastify'
+import { FastifyInstance } from 'fastify'
 
-export async function refresh(request: FastifyRequest, reply: FastifyReply) {
-  await request.jwtVerify({ onlyCookie: true })
+import { verifyJwt } from '@/http/middleware/verify-jwt'
 
-  const token = await reply.jwtSign({
-    sub: request.user.sub,
-  })
+export async function refresh(app: FastifyInstance) {
+  app.register(verifyJwt).patch('/token/refresh', async (request, reply) => {
+    const userId = await request.getCurrentUserId()
 
-  const refreshToken = await reply.jwtSign({
-    sign: {
-      sub: request.user.sub,
-      expiresIn: '7d',
-    },
-  })
+    await request.jwtVerify({ onlyCookie: true })
 
-  return reply
-    .setCookie('refreshToken', refreshToken, {
-      path: '/',
-      secure: true,
-      sameSite: true,
-      httpOnly: true,
+    const token = await reply.jwtSign({
+      sub: userId,
     })
-    .status(200)
-    .send({ token })
+
+    const refreshToken = await reply.jwtSign({
+      sign: {
+        sub: userId,
+        expiresIn: '7d',
+      },
+    })
+
+    return reply
+      .setCookie('refreshToken', refreshToken, {
+        path: '/',
+        secure: true,
+        sameSite: true,
+        httpOnly: true,
+      })
+      .status(200)
+      .send({ token })
+  })
 }

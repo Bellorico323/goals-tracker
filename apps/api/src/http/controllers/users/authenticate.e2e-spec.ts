@@ -1,8 +1,5 @@
 import { FastifyInstance } from 'fastify'
 import request from 'supertest'
-import { afterAll, beforeAll, describe, expect, it } from 'vitest'
-
-import { env } from '@/env'
 
 describe('Authenticate (e2e)', () => {
   let app: FastifyInstance
@@ -22,8 +19,6 @@ describe('Authenticate (e2e)', () => {
       email: 'johndoe@example.com',
       password: '123456',
     })
-
-    console.log(env.DATABASE_URL)
 
     const response = await request(app.server).post('/sessions').send({
       email: 'johndoe@example.com',
