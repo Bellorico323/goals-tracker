@@ -1,9 +1,10 @@
 import { FastifyInstance } from 'fastify'
 import { ZodTypeProvider } from 'fastify-type-provider-zod'
 import { makeGetUserProfileUseCase } from 'src/use-cases/users/factories/make-get-user-profile-use-case'
-import z from 'zod'
 
 import { verifyJwt } from '@/http/middleware/verify-jwt'
+
+import { userSchema } from './schemas/auth.schema'
 
 export async function profile(app: FastifyInstance) {
   app
@@ -17,16 +18,7 @@ export async function profile(app: FastifyInstance) {
           summary: 'Get current user profile',
           security: [{ bearerAuth: [] }],
           response: {
-            200: z.object({
-              user: z.object({
-                id: z.string(),
-                name: z.string(),
-                email: z.string(),
-                password: z.string(),
-                createdAt: z.date(),
-                updatedAt: z.date().nullable(),
-              }),
-            }),
+            200: userSchema,
           },
         },
       },

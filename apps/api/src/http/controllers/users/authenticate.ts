@@ -2,7 +2,12 @@ import { FastifyInstance } from 'fastify'
 import { ZodTypeProvider } from 'fastify-type-provider-zod'
 import { InvalidCredentialsError } from 'src/use-cases/users/errors/invalid-credentials-error'
 import { makeAuthenticateUseCase } from 'src/use-cases/users/factories/make-authenticate-use-case'
-import { z } from 'zod'
+
+import {
+  loginUserSchema,
+  responseLoginUserFailureSchema,
+  responseLoginUserSuccessSchema,
+} from './schemas/auth.schema'
 
 export async function authenticate(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().post(
@@ -11,27 +16,15 @@ export async function authenticate(app: FastifyInstance) {
       schema: {
         tags: ['auth'],
         summary: 'Authenticate with e-mail and password',
-        body: z.object({
-          email: z.string().email(),
-          password: z.string(),
-        }),
+        body: loginUserSchema,
         response: {
-          201: z.object({
-            token: z.string(),
-          }),
-          400: z.object({
-            message: z.string(),
-          }),
+          201: responseLoginUserSuccessSchema,
+          400: responseLoginUserFailureSchema,
         },
       },
     },
     async (request, reply) => {
-      const authenticateBodySchema = z.object({
-        email: z.string().email(),
-        password: z.string().min(6),
-      })
-
-      const { email, password } = authenticateBodySchema.parse(request.body)
+      const { email, password } = loginUserSchema.parse(request.body)
 
       try {
         const authenticateUseCase = makeAuthenticateUseCase()
