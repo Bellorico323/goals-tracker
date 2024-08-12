@@ -18,7 +18,23 @@ const config = {
       },
     },
     extend: {
+      gridTemplateColumns: {
+        app: 'minmax(13.125rem, 15rem) 1fr',
+      },
       colors: {
+        gold: {
+          950: '#3E240A',
+          900: '#6B4318',
+          800: '#7D5216',
+          700: '#976711',
+          600: '#BD8E11',
+          500: '#DBB517',
+          400: '#EDD23A',
+          300: '#F1E053',
+          200: '#F6EF92',
+          100: '#FAF9C7',
+          50: '#FDFCE9',
+        },
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
