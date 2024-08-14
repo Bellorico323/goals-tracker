@@ -1,4 +1,3 @@
-import fastifyCookie from '@fastify/cookie'
 import fastifyJwt from '@fastify/jwt'
 import fastifySwagger from '@fastify/swagger'
 import fastifySwaggerUi from '@fastify/swagger-ui'
@@ -19,17 +18,14 @@ app.setValidatorCompiler(validatorCompiler)
 app.setSerializerCompiler(serializerCompiler)
 
 app.register(fastifyJwt, {
-  secret: env.JWT_SECRET,
-  cookie: {
-    cookieName: 'refreshToken',
-    signed: false,
+  secret: {
+    private: Buffer.from(env.JWT_PRIVATE_KEY, 'base64'),
+    public: Buffer.from(env.JWT_PUBLIC_KEY, 'base64'),
   },
   sign: {
-    expiresIn: '10m',
+    algorithm: 'RS256',
   },
 })
-
-app.register(fastifyCookie)
 
 app.register(fastifySwagger, {
   openapi: {

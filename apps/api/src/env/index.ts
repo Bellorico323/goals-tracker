@@ -9,7 +9,8 @@ const envSchema = z.object({
   PG_DATABASE_NAME: z.string(),
   DATABASE_DOCKER_PORT: z.coerce.number().default(5432),
   PORT: z.coerce.number().default(3333),
-  JWT_SECRET: z.string(),
+  JWT_PUBLIC_KEY: z.string(),
+  JWT_PRIVATE_KEY: z.string(),
 })
 
 const _env = envSchema.safeParse(process.env)
