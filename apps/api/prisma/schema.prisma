@@ -20,6 +20,7 @@ model User {
   password    String
   createdAt   DateTime      @default(now()) @map("created_at")
   Transaction Transaction[]
+  Category    Category[]
 
   @@map("users")
 }
@@ -40,9 +41,11 @@ model Transaction {
 }
 
 model Category {
-  id          String        @id @default(uuid())
+  id          String @id @default(uuid())
   name        String
   description String
+  user        User   @relation(fields: [userId], references: [id])
+  userId      String @map("user_id")
   createdAt   DateTime      @default(now()) @map("created_at")
   updatedAt   DateTime?     @updatedAt @map("updated_at")
   Transaction Transaction[]

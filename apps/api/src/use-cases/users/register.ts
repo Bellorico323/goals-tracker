@@ -2,9 +2,10 @@
 
 import { User } from '@prisma/client'
 import { hash } from 'bcryptjs'
-import { UsersRepository } from 'src/repositories/users-repository'
+
 
 import { UserAlreadyExistsError } from './errors/user-already-exists-error'
+import { PrismaUsersRepository } from '@/repositories/prisma/prisma-users-repository'
 
 interface RegisterUseCaseRequest {
   name: string
@@ -19,7 +20,7 @@ interface RegisterUseCaseResponse {
 export class RegisterUseCase {
   private ROUND_HASH = 6
   // eslint-disable-next-line no-useless-constructor
-  constructor(private usersRepository: UsersRepository) {}
+  constructor(private usersRepository: PrismaUsersRepository) {}
 
   async execute({
     password,
