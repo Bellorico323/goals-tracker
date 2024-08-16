@@ -1,6 +1,7 @@
 import fastifyJwt from '@fastify/jwt'
 import fastifySwagger from '@fastify/swagger'
 import fastifySwaggerUi from '@fastify/swagger-ui'
+import { env } from '@goals/env'
 import fastify from 'fastify'
 import {
   jsonSchemaTransform,
@@ -10,7 +11,6 @@ import {
 } from 'fastify-type-provider-zod'
 import { ZodError } from 'zod'
 
-import { env } from './env'
 import { userRoutes } from './http/controllers/users/routes'
 
 export const app = fastify().withTypeProvider<ZodTypeProvider>()

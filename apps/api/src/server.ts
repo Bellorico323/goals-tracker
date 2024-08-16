@@ -1,5 +1,6 @@
+import { env } from '@goals/env'
+
 import { app } from './app'
-import { env } from './env'
 
 app
   .listen({

@@ -1,3 +1,5 @@
+'use client'
+
 import Link from 'next/link'
 
 import { Button } from '@/components/ui/button'
@@ -9,27 +11,33 @@ export function SignUpForm() {
     <form action="" className="w-full space-y-2">
       <div className="space-y-1">
         <Label htmlFor="name">Nome Completo</Label>
-        <Input placeholder="Digite seu nome completo" id="name" />
+        <Input placeholder="Digite seu nome completo" id="name" name="name" />
       </div>
 
       <div className="space-y-1">
         <Label htmlFor="email">E-mail</Label>
-        <Input placeholder="Digite seu e-mail" id="email" />
+        <Input placeholder="Digite seu e-mail" id="email" name="email" />
       </div>
 
       <div className="space-y-1">
         <Label htmlFor="password">Senha</Label>
-        <Input placeholder="Digite sua senha" type="password" id="password" />
+        <Input
+          placeholder="Digite sua senha"
+          type="password"
+          id="password"
+          name="password"
+        />
       </div>
 
-      {/* <div className="space-y-1">
-        <Label htmlFor="confirm-password">Confirmar senha</Label>
+      <div className="space-y-1">
+        <Label htmlFor="password_confirmation">Confirmar senha</Label>
         <Input
           placeholder="Digite sua senha novamente"
           type="password"
-          id="confirm-password"
+          id="password_confirmation"
+          name="password_confirmation"
         />
-      </div> */}
+      </div>
 
       <Button className="w-full" variant="primary">
         Se cadastrar
