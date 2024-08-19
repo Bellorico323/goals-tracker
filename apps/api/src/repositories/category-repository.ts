@@ -1,4 +1,4 @@
-import { Category, Prisma } from '@prisma/client'
+import { Category } from '@prisma/client'
 
 export interface ICategoryRepository {
   findById(id: string): Promise<Category | null>
@@ -8,7 +8,6 @@ export interface ICategoryRepository {
   update(id: string, data: ICreateUpdateInput): Promise<Category>
   delete(id: string): Promise<void>
 }
-
 
 export interface ICreateUpdateInput {
   id?: string

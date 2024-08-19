@@ -1,11 +1,11 @@
 import { Category, Prisma } from '@prisma/client'
-import { ICategoryRepository } from '../category-repository'
+import { ICategoryRepository, ICreateUpdateInput } from '../category-repository'
 import { randomUUID } from 'crypto'
 
 export class InMemoryCategoryRepository implements ICategoryRepository {
   public items: Category[] = []
 
-  async create(data: any): Promise<Category> {
+  async create(data: ICreateUpdateInput): Promise<Category> {
     const category = {
       id: randomUUID(),
       name: data.name,
@@ -58,17 +58,15 @@ export class InMemoryCategoryRepository implements ICategoryRepository {
     return categories
   }
 
-  async update(id: string, data: any): Promise<Category> {
+  async update(id: string, data: ICreateUpdateInput): Promise<Category> {
     const index = this.items.findIndex((item) => item.id === id)
 
     if (index === -1) {
       throw new Error('Category not found')
     }
 
-    const category = this.items[index]
-
     this.items[index] = {
-      ...category,
+      ...this.items[index],
       ...data,
       updatedAt: new Date(),
     }
