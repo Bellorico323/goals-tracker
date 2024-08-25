@@ -11,6 +11,10 @@ export const env = createEnv({
     PORT: z.coerce.number().default(3333),
     JWT_PUBLIC_KEY: z.string(),
     JWT_PRIVATE_KEY: z.string(),
+
+    GOOGLE_CLIENT_ID: z.string(),
+    GOOGLE_CLIENT_SECRET: z.string(),
+    GOOGLE_OAUTH_CLIENT_REDIRECT_URI: z.string(),
   },
   client: {},
   shared: {
@@ -26,6 +30,10 @@ export const env = createEnv({
     JWT_PUBLIC_KEY: process.env.JWT_PUBLIC_KEY,
     JWT_PRIVATE_KEY: process.env.JWT_PRIVATE_KEY,
     NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
+    GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
+    GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
+    GOOGLE_OAUTH_CLIENT_REDIRECT_URI:
+      process.env.GOOGLE_OAUTH_CLIENT_REDIRECT_URI,
   },
   emptyStringAsUndefined: true,
 })

@@ -12,7 +12,6 @@ interface GetUserProfileUseCaseResponse {
 }
 
 export class GetUserProfileUseCase {
-  // eslint-disable-next-line no-useless-constructor
   constructor(private usersRepository: UsersRepository) {}
 
   async execute({

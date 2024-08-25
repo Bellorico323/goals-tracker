@@ -18,7 +18,6 @@ interface RegisterUseCaseResponse {
 
 export class RegisterUseCase {
   private ROUND_HASH = 6
-  // eslint-disable-next-line no-useless-constructor
   constructor(private usersRepository: UsersRepository) {}
 
   async execute({

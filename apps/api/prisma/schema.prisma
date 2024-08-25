@@ -14,8 +14,25 @@ model User {
   password    String
   createdAt   DateTime      @default(now()) @map("created_at")
   Transaction Transaction[]
+  Account     Account[]
 
   @@map("users")
+}
+
+enum AccountProvider {
+  GOOGLE
+}
+
+model Account {
+  id                String          @id @default(uuid())
+  provider          AccountProvider
+  providerAccountId String          @unique @map("provider_account_id")
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String @map("user_id")
+
+  @@unique([provider, userId])
+  @@map("accounts")
 }
 
 model Transaction {
