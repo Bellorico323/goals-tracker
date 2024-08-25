@@ -11,7 +11,7 @@ describe('Update Category Use Case', () => {
     sut = new UpdateCategoryUseCase(categoryRepository)
   })
 
-  it('should be able to update category', async () => {
+  it('should be able to update a category', async () => {
     const category = await categoryRepository.create({
       name: 'Category Name',
       description: 'Category Description',

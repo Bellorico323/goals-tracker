@@ -9,7 +9,8 @@ interface CreateCategoryUseCaseRequest {
 }
 
 interface CreateCategoryUseCaseResponse {
-  category: Category
+  name: string
+  description: string
 }
 
 export class CreateCategoryUseCase {
@@ -36,8 +37,6 @@ export class CreateCategoryUseCase {
       userId,
     })
 
-    return {
-      category,
-    }
+    return category
   }
 }

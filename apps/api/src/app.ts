@@ -13,6 +13,7 @@ import { ZodError } from 'zod'
 
 import { env } from './env'
 import { userRoutes } from './http/controllers/users/routes'
+import { categoryRoutes } from './http/controllers/categories/routes'
 
 export const app = fastify().withTypeProvider<ZodTypeProvider>()
 app.setValidatorCompiler(validatorCompiler)
@@ -56,6 +57,7 @@ app.register(fastifySwaggerUi, {
 })
 
 app.register(userRoutes)
+app.register(categoryRoutes)
 
 app.setErrorHandler((error, _, reply) => {
   if (error instanceof ZodError) {
