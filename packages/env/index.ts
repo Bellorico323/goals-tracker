@@ -8,7 +8,7 @@ export const env = createEnv({
     PG_DATABASE_USER: z.string(),
     PG_DATABASE_NAME: z.string(),
     DATABASE_DOCKER_PORT: z.coerce.number().default(5432),
-    PORT: z.coerce.number().default(3333),
+    SERVER_PORT: z.coerce.number().default(3333),
     JWT_PUBLIC_KEY: z.string(),
     JWT_PRIVATE_KEY: z.string(),
 
@@ -26,7 +26,7 @@ export const env = createEnv({
     PG_DATABASE_USER: process.env.PG_DATABASE_USER,
     PG_DATABASE_NAME: process.env.PG_DATABASE_NAME,
     DATABASE_DOCKER_PORT: process.env.DATABASE_DOCKER_PORT,
-    PORT: process.env.PORT,
+    SERVER_PORT: process.env.PORT,
     JWT_PUBLIC_KEY: process.env.JWT_PUBLIC_KEY,
     JWT_PRIVATE_KEY: process.env.JWT_PRIVATE_KEY,
     NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,

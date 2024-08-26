@@ -1,14 +1,24 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
 import googleLogo from '@/assets/googleLogo.svg'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { useFormState } from '@/hooks/use-form-state'
 
 import { signInWithGoogle } from '../actions'
+import { signInWithEmailAndPassword } from './actions'
 
 export function SignInForm() {
+  const redirect = useRouter()
+
+  const [{ errors }, handleSubmit, isPending] = useFormState(
+    signInWithEmailAndPassword,
+    () => redirect.push('/'),
+  )
+
   return (
     <div className="w-full space-y-4">
       <form action="" className="w-full space-y-3">
