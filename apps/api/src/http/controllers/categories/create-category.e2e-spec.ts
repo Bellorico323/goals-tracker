@@ -14,7 +14,7 @@ describe('Create Category (e2e)', () => {
     await app.close()
   })
 
-  it('should be able to create a category', async () => {
+  test('should be able to create a category', async () => {
     const { token } = await createAndAuthenticateUser(app)
     const response = await request(app.server)
       .post('/category')

@@ -6,14 +6,24 @@ import { Category } from '@prisma/client'
 export class UpdateCategoryUseCase {
   constructor(private categoryRepository: PrismaCategoryRepository) {}
 
-  async execute(id: string, data: ICreateUpdateInput): Promise<Category> {
-    const category = await this.categoryRepository.findById(id)
+  async execute({
+    description,
+    name,
+    userId,
+    id,
+  }: ICreateUpdateInput): Promise<Category> {
+    const categoryId = id || ''
+    const category = await this.categoryRepository.findById(categoryId)
 
     if (!category) {
       throw new CategoryNotFoundError()
     }
 
-    const updatedCategory = await this.categoryRepository.update(id, data)
+    const updatedCategory = await this.categoryRepository.update(categoryId, {
+      description,
+      name,
+      userId,
+    })
 
     return updatedCategory
   }

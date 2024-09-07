@@ -12,12 +12,13 @@ describe('Create Category Use Case', () => {
   })
 
   it('should be able to create category', async () => {
-    const { category } = await sut.execute({
+    const { description, name } = await sut.execute({
       name: 'Category Name',
       description: 'Category Description',
       userId: 'user-id',
     })
 
-    expect(category.id).toEqual(expect.any(String))
+    expect(name).toBe('Category Name')
+    expect(description).toBe('Category Description')
   })
 })

@@ -18,12 +18,12 @@ describe('Update Category Use Case', () => {
       userId: 'user-id',
     })
 
-    const updatedCategory = await sut.execute(category.id, {
+    const updatedCategory = await sut.execute({
       name: 'New Category Name',
       description: 'New Category Description',
       userId: 'user-id',
+      id: category.id,
     })
-
     expect(updatedCategory.id).toEqual(category.id)
     expect(updatedCategory.name).toEqual('New Category Name')
     expect(updatedCategory.description).toEqual('New Category Description')
