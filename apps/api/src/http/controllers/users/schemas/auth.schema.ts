@@ -28,3 +28,7 @@ export const responseLoginUserSuccessSchema = z.object({
 export const responseLoginUserFailureSchema = z.object({
   message: z.string(),
 })
+
+export const loginWithGoogleSchema = z.object({
+  code: z.string(),
+})
