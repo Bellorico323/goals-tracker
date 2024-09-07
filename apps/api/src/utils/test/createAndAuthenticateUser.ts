@@ -1,29 +1,22 @@
-import { prisma } from '@/lib/prisma'
+import { PrismaClient } from '@prisma/client'
 import { hash } from 'bcryptjs'
 import { FastifyInstance } from 'fastify'
 import request from 'supertest'
 
 export async function createAndAuthenticateUser(app: FastifyInstance) {
-  const EMAIL_EXAMPLE = 'johndoe@example.com'
-  const PASSWORD_EXAMPLE = '123456'
+  const prisma = new PrismaClient()
 
-  const existingUser = await prisma.user.findUnique({
-    where: { email: EMAIL_EXAMPLE },
+  await prisma.user.create({
+    data: {
+      name: 'John Doe',
+      email: 'johndoe@example.com',
+      password: await hash('123456', 6),
+    },
   })
 
-  if (!existingUser) {
-    await prisma.user.create({
-      data: {
-        name: 'John Doe',
-        email: EMAIL_EXAMPLE,
-        password: await hash(PASSWORD_EXAMPLE, 6),
-      },
-    })
-  }
-
   const authResponse = await request(app.server).post('/sessions').send({
-    email: EMAIL_EXAMPLE,
-    password: PASSWORD_EXAMPLE,
+    email: 'johndoe@example.com',
+    password: '123456',
   })
 
   const { token } = authResponse.body
