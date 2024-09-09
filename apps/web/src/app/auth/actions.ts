@@ -18,10 +18,12 @@ export async function signInWithGoogle() {
 
   googleSignInURL.searchParams.set(
     'scope',
-    'https://www.googleapis.com/auth/userinfo.email',
+    'https://www.googleapis.com/auth/userinfo.profile',
   )
 
   googleSignInURL.searchParams.set('access_type', 'offline')
+
+  googleSignInURL.searchParams.set('include_granted_scopes', 'true')
 
   redirect(googleSignInURL.toString())
 }

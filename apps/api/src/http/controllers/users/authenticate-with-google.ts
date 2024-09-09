@@ -1,13 +1,31 @@
 import { env } from '@goals/env'
-import fastify, { FastifyInstance } from 'fastify'
+import { FastifyInstance } from 'fastify'
 import { ZodTypeProvider } from 'fastify-type-provider-zod'
 import z from 'zod'
+
+import { makeAuthenticateWithGoogleUseCase } from '@/use-cases/users/factories/make-authenticate-with-oauth-use-case'
+import { decodeJwt } from '@/utils/decode-jwt'
 
 import {
   loginWithGoogleSchema,
   responseLoginUserFailureSchema,
   responseLoginUserSuccessSchema,
 } from './schemas/auth.schema'
+
+interface googlePayload {
+  iss: string
+  azp: string
+  aud: string
+  sub: string
+  email: string
+  email_verified: boolean
+  at_hash: string
+  name: string
+  picture: string
+  given_name: string
+  iat: number
+  exp: number
+}
 
 export async function authenticateWithGoogle(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().post(
@@ -52,7 +70,11 @@ export async function authenticateWithGoogle(app: FastifyInstance) {
 
       const googleAccessTokenData = await googleAccessTokenResponse.json()
 
-      const { id_token: tokenId } = z
+      console.log({ code })
+
+      console.log(googleAccessTokenData)
+
+      const googleResponse = z
         .object({
           access_token: z.string(),
           expires_in: z.number(),
@@ -63,13 +85,36 @@ export async function authenticateWithGoogle(app: FastifyInstance) {
         })
         .parse(googleAccessTokenData)
 
-      const { email } = app.jwt.decode<{ email: string }>(tokenId)
+      const { id_token: googleData } = googleResponse
 
-      if (!email) {
-        throw new Error('You must give us permission to get your e-mail')
-      }
+      const {
+        email,
+        name,
+        picture: avatarUrl,
+        sub: providerAccountId,
+      } = decodeJwt<googlePayload>(googleData)
 
-      reply.status(201).send({ token: 'ok' })
+      const authenticateWithGoogle = makeAuthenticateWithGoogleUseCase()
+
+      const { user } = await authenticateWithGoogle.execute({
+        name,
+        email,
+        avatarUrl,
+        providerAccountId,
+      })
+
+      const token = await reply.jwtSign(
+        {
+          sub: user.id,
+        },
+        {
+          sign: {
+            expiresIn: '7d',
+          },
+        },
+      )
+
+      reply.status(201).send({ token })
     },
   )
 }
