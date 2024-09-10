@@ -9,7 +9,7 @@ import { CategoryNotFoundError } from '@/use-cases/categories/errors/category-no
 import { makeUpdateCategoryUseCase } from '@/use-cases/categories/factories/make-update-category-use-case'
 import z from 'zod'
 
-export async function create(app: FastifyInstance) {
+export async function update(app: FastifyInstance) {
   app
     .withTypeProvider<ZodTypeProvider>()
     .register(verifyJwt)
@@ -40,7 +40,7 @@ export async function create(app: FastifyInstance) {
             id,
           })
 
-          return reply.status(201).send(category)
+          return reply.status(200).send(category)
         } catch (err) {
           if (err instanceof CategoryAlreadyExistsError) {
             return reply.status(400).send({ message: err.message })

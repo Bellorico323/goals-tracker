@@ -30,6 +30,7 @@ describe('Get Categories (e2e)', () => {
       .get('/category')
       .set('Authorization', `Bearer ${token}`)
 
-    expect(response.statusCode).toEqual(201)
+    expect(response.statusCode).toEqual(200)
+    expect(response.body).toHaveLength(10)
   })
 })

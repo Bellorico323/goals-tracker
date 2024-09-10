@@ -24,7 +24,7 @@ export async function get(app: FastifyInstance) {
             userId,
           })
 
-          return reply.status(201).send(categories)
+          return reply.status(200).send(categories)
         } catch (err) {
           return reply.status(500).send({ message: 'Internal server error' })
         }
