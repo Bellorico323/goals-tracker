@@ -16,6 +16,8 @@ const signInSchema = z.object({
 export async function signInWithEmailAndPassword(data: FormData) {
   const result = signInSchema.safeParse(Object.fromEntries(data))
 
+  console.log(result)
+
   if (!result.success) {
     const errors = result.error.flatten().fieldErrors
 
