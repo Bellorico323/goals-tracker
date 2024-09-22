@@ -28,6 +28,10 @@ export class AuthenticateUseCase {
       throw new InvalidCredentialsError()
     }
 
+    if (!user.password) {
+      throw new Error('Authenticate with google')
+    }
+
     const doesPasswordMatches = await compare(password, user.password)
 
     if (!doesPasswordMatches) {

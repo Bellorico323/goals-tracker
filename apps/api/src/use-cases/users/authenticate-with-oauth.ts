@@ -1,10 +1,13 @@
 import { User } from '@prisma/client'
 import { UsersRepository } from 'src/repositories/users-repository'
 
-import { InvalidCredentialsError } from './errors/invalid-credentials-error'
+import { AccountRepository } from '@/repositories/account-repository'
 
 interface AuthenticateWithOAuthUseCaseRequest {
+  name: string
   email: string
+  avatarUrl: string
+  providerAccountId: string
 }
 
 interface AuthenticateWithOAuthUseCaseResponse {
@@ -12,15 +15,37 @@ interface AuthenticateWithOAuthUseCaseResponse {
 }
 
 export class AuthenticateWithOAuthUseCase {
-  constructor(private usersRepository: UsersRepository) {}
+  constructor(
+    private usersRepository: UsersRepository,
+    private accountsRepository: AccountRepository,
+  ) {}
 
   async execute({
     email,
+    name,
+    avatarUrl,
+    providerAccountId,
   }: AuthenticateWithOAuthUseCaseRequest): Promise<AuthenticateWithOAuthUseCaseResponse> {
-    const user = await this.usersRepository.findByEmail(email)
+    let user = await this.usersRepository.findByEmail(email)
 
     if (!user) {
-      throw new InvalidCredentialsError()
+      user = await this.usersRepository.create({
+        name,
+        email,
+        avatarUrl,
+      })
+    }
+
+    const account = await this.accountsRepository.findGoogleAccountByUserId(
+      user.id,
+    )
+
+    if (!account) {
+      await this.accountsRepository.create({
+        provider: 'GOOGLE',
+        providerAccountId,
+        userId: user.id,
+      })
     }
 
     return {

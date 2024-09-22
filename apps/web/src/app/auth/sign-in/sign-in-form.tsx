@@ -1,3 +1,6 @@
+'use client'
+
+import { Loader2 } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
@@ -21,10 +24,15 @@ export function SignInForm() {
 
   return (
     <div className="w-full space-y-4">
-      <form action="" className="w-full space-y-3">
+      <form onSubmit={handleSubmit} className="w-full space-y-3">
         <div className="space-y-1.5">
           <Label htmlFor="email">E-mail</Label>
-          <Input placeholder="Digite seu e-mail" id="email" />
+          <Input placeholder="Digite seu e-mail" id="email" name="email" />
+          {errors?.email && (
+            <p className="text-xs font-medium text-red-500 dark:text-red-400">
+              {errors.email[0]}
+            </p>
+          )}
         </div>
 
         <div className="space-y-1.5">
@@ -37,11 +45,21 @@ export function SignInForm() {
               Esqueci minha senha
             </Link>
           </div>
-          <Input placeholder="Digite sua senha" type="password" id="password" />
+          <Input
+            placeholder="Digite sua senha"
+            type="password"
+            id="password"
+            name="password"
+          />
+          {errors?.password && (
+            <p className="text-xs font-medium text-red-500 dark:text-red-400">
+              {errors.password[0]}
+            </p>
+          )}
         </div>
 
-        <Button className="w-full" variant="primary">
-          Entrar
+        <Button className="w-full" variant="primary" disabled={isPending}>
+          {isPending ? <Loader2 className="size-4 animate-spin" /> : 'Entrar'}
         </Button>
       </form>
 

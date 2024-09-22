@@ -33,9 +33,9 @@ export class InMemoryUsersRepository implements IUsersRepository {
       id: randomUUID(),
       name: data.name,
       email: data.email,
-      password: data.password,
+      avatarUrl: data.avatarUrl ?? null,
+      password: data.password ?? null,
       createdAt: new Date(),
-      updatedAt: new Date(),
     }
 
     this.items.push(user)

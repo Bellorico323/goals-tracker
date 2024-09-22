@@ -8,8 +8,6 @@ export async function GET(request: NextRequest) {
 
   const code = searchParams.get('code')
 
-  console.log(code)
-
   if (!code) {
     return NextResponse.json(
       { message: 'Google OAuth code was not found.' },
@@ -19,12 +17,10 @@ export async function GET(request: NextRequest) {
 
   const { token } = await signInWithGoogle({ code })
 
-  // cookies().set('token', token, {
-  //   path: '/',
-  //   maxAge: 60 * 60 * 24 * 7, // 7 days
-  // })
-
-  console.log({ token })
+  cookies().set('token', token, {
+    path: '/',
+    maxAge: 60 * 60 * 24 * 7, // 7 days
+  })
 
   const redirectUrl = request.nextUrl.clone()
 
