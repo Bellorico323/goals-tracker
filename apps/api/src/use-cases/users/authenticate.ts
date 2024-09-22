@@ -1,8 +1,9 @@
 import { User } from '@prisma/client'
 import { compare } from 'bcryptjs'
-import { UsersRepository } from 'src/repositories/users-repository'
+
 
 import { InvalidCredentialsError } from './errors/invalid-credentials-error'
+import { PrismaUsersRepository } from '@/repositories/prisma/prisma-users-repository'
 
 interface AuthenticateUseCaseRequest {
   email: string
@@ -15,7 +16,7 @@ interface AuthenticateUseCaseResponse {
 
 export class AuthenticateUseCase {
   // eslint-disable-next-line no-useless-constructor
-  constructor(private usersRepository: UsersRepository) {}
+  constructor(private usersRepository: PrismaUsersRepository) {}
 
   async execute({
     email,
@@ -25,6 +26,10 @@ export class AuthenticateUseCase {
 
     if (!user) {
       throw new InvalidCredentialsError()
+    }
+
+    if (!user.password) {
+      throw new Error('Authenticate with google')
     }
 
     const doesPasswordMatches = await compare(password, user.password)

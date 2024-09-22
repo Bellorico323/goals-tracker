@@ -1,10 +1,11 @@
 import { randomUUID } from 'node:crypto'
 
 import { Prisma, User } from '@prisma/client'
+import { IUsersRepository } from '../users-repository'
 
-import { UsersRepository } from '../users-repository'
 
-export class InMemoryUsersRepository implements UsersRepository {
+
+export class InMemoryUsersRepository implements IUsersRepository {
   public items: User[] = []
 
   async findById(id: string): Promise<User | null> {
@@ -32,9 +33,9 @@ export class InMemoryUsersRepository implements UsersRepository {
       id: randomUUID(),
       name: data.name,
       email: data.email,
-      password: data.password,
+      avatarUrl: data.avatarUrl ?? null,
+      password: data.password ?? null,
       createdAt: new Date(),
-      updatedAt: new Date(),
     }
 
     this.items.push(user)

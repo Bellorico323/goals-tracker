@@ -2,15 +2,19 @@
   "name": "@goals/api",
   "version": "1.0.0",
   "scripts": {
-    "dev": "tsx watch src/server.ts",
+    "dev": "pnpm env:load tsx watch src/server.ts",
+    "db:migrate": "pnpm env:load prisma migrate dev",
+    "db:studio": "pnpm env:load prisma studio",
+    "db:seed": "pnpm env:load prisma db seed",
+    "env:load": "dotenv -e ../../.env --",
     "start": "node build/server.js",
     "build": "tsup src --out-dir build",
-    "test": "vitest run",
-    "test:watch": "vitest",
-    "test:e2e": "vitest run --config ./vitest.config.e2e.ts",
-    "test:e2e:watch": "vitest --config ./vitest.config.e2e.ts",
-    "test:coverage": "vitest run --coverage",
-    "test:ui": "vitest --ui"
+    "test": "pnpm env:load vitest run",
+    "test:watch": "pnpm env:load vitest",
+    "test:e2e": "pnpm env:load vitest run  --config ./vitest.config.e2e.ts",
+    "test:e2e:watch": "pnpm env:load vitest  --config ./vitest.config.e2e.ts",
+    "test:coverage": "pnpm env:load vitest run --coverage",
+    "test:ui": "pnpm env:load vitest --ui"
   },
   "prettier": "@goals/prettier",
   "eslintConfig": {
@@ -23,6 +27,7 @@
     "@goals/prettier": "workspace:*",
     "@goals/tsconfig": "workspace:*",
     "@types/node": "^22.1.0",
+    "dotenv-cli": "^7.4.2",
     "prisma": "^5.18.0"
   },
   "dependencies": {
@@ -31,6 +36,7 @@
     "@fastify/jwt": "^8.0.1",
     "@fastify/swagger": "^8.15.0",
     "@fastify/swagger-ui": "^4.0.1",
+    "@goals/env": "workspace:*",
     "@prisma/client": "^5.18.0",
     "@types/bcryptjs": "^2.4.6",
     "@types/supertest": "^6.0.2",
